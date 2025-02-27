@@ -98,43 +98,54 @@ const Footer = () => {
       {!createNewHouse ? (
         <button onClick={() => setCreateNewHouse(true)}>Build new house</button>
       ) : (
-        <Flex vertical>
-          Title:
-          <input
-            onChange={(e) =>
-              setNewHouse((p) => ({ ...p, title: e.target.value }))
-            }
-          />
-          Floors:
-          <input
-            type="number"
-            max="10"
-            onChange={(e) => {
-              const floor = e.target.value;
-              setNewHouse((p) => ({ ...p, floors: floor > 10 ? 10 : floor }));
-            }}
-          />
-          Color:
-          <select
-            onChange={(e) =>
-              setNewHouse((p) => ({ ...p, color: e.target.value }))
-            }
-          >
-            {COLORS.map((opt, i) => (
-              <option
-                key={i}
-                selected={opt === newHouse.color}
-                value={opt}
-                label={opt}
-              />
-            ))}
-          </select>
+        <Flex vertical gap={5}>
+          <Flex gap={5}>
+            Title:
+            <input
+              onChange={(e) =>
+                setNewHouse((p) => ({ ...p, title: e.target.value }))
+              }
+            />
+          </Flex>
+
+          <Flex gap={5}>
+            Floors:
+            <input
+              type="number"
+              max="10"
+              onChange={(e) => {
+                const floor = e.target.value;
+                setNewHouse((p) => ({ ...p, floors: floor > 10 ? 10 : floor }));
+              }}
+            />
+          </Flex>
+
+          <Flex gap={5}>
+            Color:
+            <select
+              onChange={(e) =>
+                setNewHouse((p) => ({ ...p, color: e.target.value }))
+              }
+            >
+              {COLORS.map((opt, i) => (
+                <option
+                  key={i}
+                  selected={opt === newHouse.color}
+                  value={opt}
+                  label={opt}
+                />
+              ))}
+            </select>
+          </Flex>
+
           <button
             disabled={Object.values(newHouse).length !== 3}
             onClick={handleAddHouse}
           >
             Add
           </button>
+
+          <button onClick={() => setCreateNewHouse(false)}>Cancel</button>
         </Flex>
       )}
     </Flex>
