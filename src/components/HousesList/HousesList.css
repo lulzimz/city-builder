@@ -1,2 +1,26 @@
-.houseContainer {
+.housesContainer {
+  border: 1px solid gray;
+  min-width: 400px;
+  justify-content: space-between;
+}
+.housesList {
+  height: 100%;
+  flex-direction: column;
+  gap: 10px;
+  overflow: auto;
+}
+
+.house {
+  padding: 10px;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.housesContainer .section {
+  padding: 20px;
+  background: rgba(141, 137, 137, 0.689);
+}
+.delete-icon {
+  align-self: flex-end;
+  width: 40px;
 }
