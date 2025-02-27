@@ -1,6 +1,5 @@
 .housesContainer {
   border: 1px solid gray;
-  min-width: 400px;
   justify-content: space-between;
 }
 .housesList {
