@@ -13,6 +13,7 @@
   padding: 10px;
   gap: 10px;
   justify-content: space-between;
+  animation: fadeIn 1s ease-in;
 }
 
 .housesContainer .section {
@@ -22,4 +23,13 @@
 .delete-icon {
   align-self: flex-end;
   width: 40px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

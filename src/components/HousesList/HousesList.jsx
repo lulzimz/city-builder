@@ -21,9 +21,9 @@ const HousesList = () => {
       <div className="section">Houses List</div>
 
       <Flex className="housesList">
-        {houses.map(({ id, title, floors, color }, index) => {
+        {houses.map(({ id, title, floors, color }) => {
           return (
-            <Flex key={index} className="house">
+            <Flex key={id} className="house">
               <Flex vertical gap={10}>
                 <div className="title">{title}</div>
 
