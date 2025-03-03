@@ -1,79 +1,22 @@
 import { Flex } from "antd";
 import { housesStore } from "../../store/housesStore";
 import "./HousesList.css";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 const COLORS = ["red", "green", "orange"];
 
 //this component will be rendered every time when the houses state changes
 const HousesList = () => {
-  const { houses, setHouses } = housesStore();
-
-  const handleEditHouse = (id, key, value) => {
-    setHouses(
-      houses.map((house) =>
-        house.id === id ? { ...house, [key]: value } : house
-      )
-    );
-  };
+  const { houses } = housesStore();
 
   return (
     <Flex vertical className="housesContainer">
       <div className="section">Houses List</div>
 
       <Flex className="housesList">
-        {houses.map(({ id, title, floors, color }) => {
-          return (
-            <Flex key={id} className="house">
-              <Flex vertical gap={10}>
-                <div className="title">{title}</div>
-
-                <Flex gap={5}>
-                  <span>Floors:{floors}</span>
-                </Flex>
-
-                <input
-                  type="range"
-                  value={floors}
-                  max={10}
-                  onChange={(e) =>
-                    handleEditHouse(id, "floors", e.target.value)
-                  }
-                />
-              </Flex>
-
-              <Flex vertical gap={10}>
-                <button
-                  className="delete-icon"
-                  onClick={() =>
-                    setHouses(houses.filter((item) => item.id !== id))
-                  }
-                >
-                  X
-                </button>
-
-                <Flex gap={5}>
-                  <span>Color:</span>
-
-                  <select
-                    onChange={(e) =>
-                      handleEditHouse(id, "color", e.target.value)
-                    }
-                  >
-                    {COLORS.map((opt, i) => (
-                      <option
-                        key={i}
-                        selected={opt === color}
-                        value={opt}
-                        label={opt}
-                      />
-                    ))}
-                  </select>
-                </Flex>
-              </Flex>
-            </Flex>
-          );
-        })}
+        {houses.map((house) => (
+          <HouseConfig key={house.id} {...house} />
+        ))}
       </Flex>
 
       <Footer />
@@ -83,14 +26,59 @@ const HousesList = () => {
 
 export default HousesList;
 
-const Footer = () => {
-  const { houses, setHouses } = housesStore();
+const HouseConfig = memo(({ id, title, color, floors }) => {
+  const editHouse = housesStore((state) => state.editHouse);
+  const deleteHouse = housesStore((state) => state.deleteHouse);
+
+  return (
+    <Flex key={id} className="house">
+      <Flex vertical gap={10}>
+        <div className="title">{title}</div>
+
+        <Flex gap={5}>
+          <span>Floors:{floors}</span>
+        </Flex>
+
+        <input
+          type="range"
+          value={floors}
+          max={10}
+          onChange={(e) => editHouse(id, "floors", e.target.value)}
+        />
+      </Flex>
+
+      <Flex vertical gap={10}>
+        <button className="delete-icon" onClick={() => deleteHouse(id)}>
+          X
+        </button>
+
+        <Flex gap={5}>
+          <span>Color:</span>
+
+          <select onChange={(e) => editHouse(id, "color", e.target.value)}>
+            {COLORS.map((opt, i) => (
+              <option
+                key={i}
+                selected={opt === color}
+                value={opt}
+                label={opt}
+              />
+            ))}
+          </select>
+        </Flex>
+      </Flex>
+    </Flex>
+  );
+});
+
+const Footer = memo(() => {
+  const addHouse = housesStore((state) => state.addHouse);
 
   const [createNewHouse, setCreateNewHouse] = useState(false);
   const [newHouse, setNewHouse] = useState({});
 
   const handleAddHouse = () => {
-    setHouses([...houses, { id: Date.now(), ...newHouse }]);
+    addHouse({ id: Date.now(), ...newHouse });
     setCreateNewHouse(false);
   };
 
@@ -151,4 +139,4 @@ const Footer = () => {
       )}
     </Flex>
   );
-};
+});

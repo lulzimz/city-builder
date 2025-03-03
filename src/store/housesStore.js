@@ -6,6 +6,18 @@ const initialHouses = [
   { id: 3, title: "House 3", floors: 3, color: "red" },
 ];
 
-export const housesStore = create((set) => {
-  return { houses: initialHouses, setHouses: (houses) => set({ houses }) };
+export const housesStore = create((set, get) => {
+  return {
+    houses: initialHouses,
+    setHouses: (houses) => set({ houses }),
+    addHouse: (house) => set({ houses: [...get().houses, house] }),
+    deleteHouse: (id) =>
+      set({ houses: get().houses.filter((item) => item.id !== id) }),
+    editHouse: (id, key, value) =>
+      set({
+        houses: get().houses.map((house) =>
+          house.id === id ? { ...house, [key]: value } : house
+        ),
+      }),
+  };
 });

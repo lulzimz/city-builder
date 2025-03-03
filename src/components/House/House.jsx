@@ -9,8 +9,6 @@ import { memo } from "react";
   and when we get it like this useSelector(()=> houses[id]) it will not be renderd unnecessary
 */
 const House = memo(({ floors, color }) => {
-  console.log("wwwww");
-
   return (
     <Flex className="houseContainer">
       {/* Roof */}
