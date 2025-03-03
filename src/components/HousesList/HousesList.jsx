@@ -5,6 +5,7 @@ import { useState } from "react";
 
 const COLORS = ["red", "green", "orange"];
 
+//this component will be rendered every time when the houses state changes
 const HousesList = () => {
   const { houses, setHouses } = housesStore();
 
